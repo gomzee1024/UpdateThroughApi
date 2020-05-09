@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
         protected void onPreExecute() {
             super.onPreExecute();
             // TODO: Show progress bar
+            worldTxtView.setText("Loading..");
         }
 
         protected String doInBackground(String... params) {
@@ -75,8 +76,10 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
             // TODO: Change the UI and update all state list
-            if (worldData != null) {
-
+            if (worldData != null && result.equals("success")) {
+                worldTxtView.setText(result);
+            }else{
+                worldTxtView.setText("Something is comming null");
             }
         }
     }
@@ -86,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         worldTxtView = findViewById(R.id.worldTxtView);
-
+        
         new JsonWorldTask().execute(API_URL_FOR_WORLD_DATA);
     }
 }
